@@ -148,13 +148,13 @@ class GameEvaluationOW(game : Game) extends GameEvaluation(game, OW) {
 
             case SpellbookAction(_, sb, _) => sb match {
                 case MillionFavoredOnes =>
-                    true |=> 1000 -> "must have if have sp and ygs"
+                    true |=> 900 -> "must have if have sp and ygs"
                 case TheyBreakThrough =>
-                    need(UnitsAtEnemyGates) |=> 900 -> "too good"
+                    need(UnitsAtEnemyGates) |=> 1000 -> "too good"
                 case DreadCurse =>
-                    true |=> 800 -> "very good"
+                    true |=> 700 -> "very good"
                 case DragonAscending =>
-                    true |=> 700 -> "just good"
+                    true |=> 800 -> "just good"
                 case DragonDescending =>
                     true |=> 600 -> "almost good"
                 case ChannelPower =>
@@ -173,8 +173,8 @@ class GameEvaluationOW(game : Game) extends GameEvaluation(game, OW) {
                 !self.allSB && self.doom + self.gates.num >= 30 |=> -5000 -> "will break 30, but not all SB"
                 !self.allSB && self.doom + self.gates.num < 30 && self.realDoom <= 29 && self.realDoom + maxDoomGain >= 29 |=> 700 -> "won't break 30, but come near"
                 self.numSB >= 5 && cost * 2 <= power |=> 800 -> "5 SB and less than half available power"
-                self.numSB >= 2 && aprxDoomGain / cost > 1 |=> 600 -> "very sweet deal"
-                self.numSB >= 3 && aprxDoomGain / cost > 0.75 |=> 400 -> "sweet deal"
+                self.numSB >= 2 && aprxDoomGain / cost > 1 |=> 1200 -> "very sweet deal"
+                self.numSB >= 3 && aprxDoomGain / cost > 0.75 |=> 600 -> "sweet deal"
                 self.numSB >= 4 && aprxDoomGain / cost > 0.5 |=> 200 -> "ok deal"
                 cost == 5 |=> 100 -> "ritual first"
                 self.pool.goos.any |=> -200 -> "not all goos in play"
@@ -396,7 +396,7 @@ class GameEvaluationOW(game : Game) extends GameEvaluation(game, OW) {
                 o.enemyGate && o.owner == BG && o.foes(DarkYoung).any |=> -10000 -> "leave dark young alone"
 
                 o.ownGate && o.allies.cultists.num >= 2 && o.foes.none && power > 3 |=> 3000 -> "move to free to build"
-                o.ownGate && o.allies.cultists.num == 1 && o.foes.monsters.any && o.allies.goos.none |=> 2000 -> "evacuate gate"
+                o.ownGate && o.allies.cultists.num == 1 && o.foes.monsters.any && o.allies.goos.none |=> 800 -> "evacuate gate"
 
                 r.foes.none |=> 100 -> "free"
                 r.allies.none && r.foes.monsters.none && r.foes.goos.none && r.foes.cultists.any |=> 1000 -> "hi cultist"
